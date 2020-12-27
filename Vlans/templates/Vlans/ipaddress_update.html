@@ -1,0 +1,23 @@
+{% extends 'Vlans/index.html' %}
+
+{% block content %}
+
+<form action="" method="POST">
+{% csrf_token %}
+
+<div class="container">
+    <div class="row">
+    {% for field in form  %}
+        <b>{{ field.label_tag }}</b> - {{ field }} 
+    {% endfor %}
+    </div>  
+  </div>
+
+<button type="submit" value='save'>save</button>
+
+</form>
+
+    
+
+
+{% endblock %}

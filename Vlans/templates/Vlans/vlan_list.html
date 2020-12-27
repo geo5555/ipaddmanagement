@@ -1,0 +1,17 @@
+{% extends 'Vlans/index.html' %}
+
+{% block content %}
+
+    {% for vlan in vlans %}
+
+    <h1>{{ vlan.number }}</h1>
+    <h2>{{ vlan.description }}</h2>
+    <h6>{{ vlan.date }}</h6>
+    <a href="{% url 'vlans:vlan_detail' pk=vlan.pk %}">Detail</a>
+    {% endfor %}
+
+
+    
+
+
+{% endblock %}

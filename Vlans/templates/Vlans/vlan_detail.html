@@ -1,0 +1,13 @@
+{% extends 'Vlans/index.html' %}
+
+{% block content %}
+
+    <h1>{{ vlan.number }}</h1>
+    <h1>{{ vlan.description }}</h1>
+    <h6>{{ vlan.date }}</h6>
+        {% for ip in vlan.ipaddress_set.all %}
+            <p>{{ ip.ipaddress }} {{ ip.used }} {{ ip.description }}
+                <a href="{% url 'vlans:ipaddress_update' pk=ip.pk %}">edit</a>
+            </p>    
+        {% endfor %}
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'Vlans/index.html' %}
+
+{% block content %}
+<h1>VLAN {{ vlan_number }}</h1>
+<form action="" method="POST">
+{% csrf_token %}
+{{ formset.management_form }}
+{% for form in formset.forms %}
+<div class="row">
+    <!-- you need the hidden fields too in order to work -->
+    {% for hidden in form.hidden_fields %}
+        {{ hidden }}
+    {% endfor %}
+    {% for field in form.visible_fields %}
+        <b>{{ field.label_tag }}</b> - {{ field }}
+            {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+            {% endfor %} 
+            {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+</div>  
+{% endfor %}
+
+<button type="submit" value='save'>save</button>
+
+</form>
+{% for form in formset.forms %}
+{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+{% endfor %}
+
+{{ formset.non_form_errors }}
+
+
+{% if formset.total_error_count %}
+    <ul class="errorList">
+    {% for dict in formset.errors %}
+        {% for error in dict.values %}
+        <li>{{ error }}</li>
+        {% endfor %}
+    {% endfor %}
+    </ul>
+{% endif %}
+
+{% endblock %}
